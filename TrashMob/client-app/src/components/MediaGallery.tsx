@@ -38,6 +38,13 @@ export const MediaGallery: React.FC = () => {
                             </Carousel.Item>
                         );
                     }
+                    else if (media.mediaTypeId === Constants.MediaTypeInstagram) {
+                        return (
+                            <Carousel.Item className="carousel-inner">
+                                {media.mediaUrl}
+                            </Carousel.Item>
+                        );
+                    }
                     else {
                         return (
                             <Carousel.Item className="carousel-inner">

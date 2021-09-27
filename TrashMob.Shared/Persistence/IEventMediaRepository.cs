@@ -10,7 +10,9 @@
         Task<IEnumerable<EventMedia>> GetEventMedias();
 
         Task<IEnumerable<EventMedia>> GetEventMediasByEvent(Guid eventId);
- 
+
+        Task<IEnumerable<EventMedia>> GetEventMediasByEvent(Guid eventId, int mediaTypeId);
+
         Task<IEnumerable<EventMedia>> GetEventMediasByUser(Guid userId);
 
         Task<EventMedia> GetEventMediaById(Guid eventMediaId);

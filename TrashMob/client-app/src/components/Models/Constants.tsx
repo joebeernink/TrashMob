@@ -10,3 +10,6 @@ export const EventPartnerStatusDeclined = 3;
 
 export const MediaTypeInstagram = 1;
 export const MediaTypeYouTube = 2;
+
+export const MediaUsageTypeBeforeEvent = 1;
+export const MediaUsageTypeAfterEvent = 2;

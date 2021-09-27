@@ -30,6 +30,13 @@
                 .ToListAsync().ConfigureAwait(false);
         }
 
+        public async Task<IEnumerable<EventMedia>> GetEventMediasByEvent(Guid eventId, int mediaTypeId)
+        {
+            return await mobDbContext.EventMedias.Where(em => em.EventId == eventId && em.MediaTypeId == mediaTypeId)
+                .AsNoTracking()
+                .ToListAsync().ConfigureAwait(false);
+        }
+
         public async Task<IEnumerable<EventMedia>> GetEventMediasByUser(Guid userId)
         {
             return await mobDbContext.EventMedias.Where(em => em.CreatedByUserId == userId)

@@ -32,6 +32,13 @@ namespace TrashMob.Controllers
             return Ok(result);
         }
 
+        [HttpGet("{eventId}/{mediaTypeId}")]
+        public async Task<IActionResult> GetEventMedias(Guid eventId, int mediaTypeId)
+        {
+            var result = await eventMediaRepository.GetEventMediasByEvent(eventId, mediaTypeId).ConfigureAwait(false);
+            return Ok(result);
+        }
+
         [HttpGet("byUserId/{userId}")]
         [Authorize]
         [RequiredScope(Constants.TrashMobReadScope)]
@@ -65,6 +72,26 @@ namespace TrashMob.Controllers
         [Authorize]
         [RequiredScope(Constants.TrashMobWriteScope)]
         public async Task<IActionResult> PutEventMedia(Guid userId, IList<EventMedia> eventMedias)
+        {
+            var user = await userRepository.GetUserByInternalId(userId).ConfigureAwait(false);
+
+            if (!ValidateUser(user.NameIdentifier))
+            {
+                return Forbid();
+            }
+
+            foreach (var eventMedia in eventMedias)
+            {
+                await eventMediaRepository.AddUpdateEventMedia(eventMedia).ConfigureAwait(false);
+            }
+
+            return Ok();
+        }
+
+        [HttpPost("{userId}")]
+        [Authorize]
+        [RequiredScope(Constants.TrashMobWriteScope)]
+        public async Task<IActionResult> PostEventMedia(Guid userId, IList<EventMedia> eventMedias)
         {
             var user = await userRepository.GetUserByInternalId(userId).ConfigureAwait(false);
 
