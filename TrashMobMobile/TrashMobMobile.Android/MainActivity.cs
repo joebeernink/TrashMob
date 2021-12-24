@@ -12,6 +12,9 @@ namespace TrashMobMobile.Droid
     using Android.Content;
     using Android;
     using Microsoft.Extensions.DependencyInjection;
+    using Android.Gms.Common;
+    using Android.Util;
+    using System;
 
     [Activity(Label = "TrashMobMobile", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize )]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
@@ -41,6 +44,13 @@ namespace TrashMobMobile.Droid
             Xamarin.FormsMaps.Init(this, savedInstanceState);
 
             LoadApplication(new App(AddServices));
+
+            if (!IsPlayServiceAvailable())
+            {
+                throw new Exception("This device does not have Google Play Services and cannot receive push notifications.");
+            }
+
+            CreateNotificationChannel();
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
@@ -82,6 +92,55 @@ namespace TrashMobMobile.Droid
                 {
                     // Permissions already granted - display a message
                 }
+            }
+        }
+
+        protected override void OnNewIntent(Intent intent)
+        {
+            if (intent.Extras != null)
+            {
+                var message = intent.GetStringExtra("message");
+                //Todo: add code to handle message
+            }
+
+            base.OnNewIntent(intent);
+        }
+
+        bool IsPlayServiceAvailable()
+        {
+            int resultCode = GoogleApiAvailability.Instance.IsGooglePlayServicesAvailable(this);
+            if (resultCode != ConnectionResult.Success)
+            {
+                if (GoogleApiAvailability.Instance.IsUserResolvableError(resultCode))
+                {
+                    Log.Debug(AppConstants.DebugTag, GoogleApiAvailability.Instance.GetErrorString(resultCode));
+                }
+                else
+                {
+                    Log.Debug(AppConstants.DebugTag, "This device is not supported");
+                }
+
+                return false;
+            }
+
+            return true;
+        }
+
+        void CreateNotificationChannel()
+        {
+            // Notification channels are new as of "Oreo".
+            // There is no need to create a notification channel on older versions of Android.
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
+            {
+                var channelName = AppConstants.NotificationChannelName;
+                var channelDescription = string.Empty;
+                var channel = new NotificationChannel(channelName, channelName, NotificationImportance.Default)
+                {
+                    Description = channelDescription
+                };
+
+                var notificationManager = (NotificationManager)GetSystemService(NotificationService);
+                notificationManager.CreateNotificationChannel(channel);
             }
         }
     }

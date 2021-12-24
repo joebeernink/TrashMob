@@ -52,7 +52,7 @@
         {
             get
             {
-                var isTermsOfServiceOutOfDate = DateAgreedToTermsOfService == null || DateAgreedToTermsOfService.Value < Constants.TermsOfServiceDate;
+                var isTermsOfServiceOutOfDate = DateAgreedToTermsOfService == null || DateAgreedToTermsOfService.Value < AppConstants.TermsOfServiceDate;
 
                 return !isTermsOfServiceOutOfDate && !string.IsNullOrWhiteSpace(TermsOfServiceVersion);
             }
@@ -61,7 +61,7 @@
         {
             get
             {
-                var isPrivacyPolicyOutOfDate = DateAgreedToPrivacyPolicy == null || DateAgreedToPrivacyPolicy.Value < Constants.PrivacyPolicyDate;
+                var isPrivacyPolicyOutOfDate = DateAgreedToPrivacyPolicy == null || DateAgreedToPrivacyPolicy.Value < AppConstants.PrivacyPolicyDate;
 
                 return !isPrivacyPolicyOutOfDate && !string.IsNullOrWhiteSpace(PrivacyPolicyVersion);
             }
