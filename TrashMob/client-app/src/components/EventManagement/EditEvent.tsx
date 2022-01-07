@@ -47,6 +47,7 @@ export const EditEvent: React.FC<EditEventProps> = (props) => {
     const [eventStatusId, setEventStatusId] = React.useState<number>(0);
     const [eventTypeList, setEventTypeList] = React.useState<EventTypeData[]>([]);
     const [eventDateErrors, setEventDateErrors] = React.useState<string>("");
+    const [maxNumberOfParticipantsErrors, setMaxNumberOfParticipantsErrors] = React.useState<string>("");
     const [durationHoursErrors, setDurationHoursErrors] = React.useState<string>("");
     const [durationMinutesErrors, setDurationMinutesErrors] = React.useState<string>("");
     const [latitudeErrors, setLatitudeErrors] = React.useState<string>("");
@@ -55,6 +56,7 @@ export const EditEvent: React.FC<EditEventProps> = (props) => {
     const [isMapKeyLoaded, setIsMapKeyLoaded] = React.useState<boolean>(false);
     const [mapOptions, setMapOptions] = React.useState<IAzureMapOptions>();
     const [title, setTitle] = React.useState<string>("Create Event");
+    const [isSaveEnabled, setIsSaveEnabled] = React.useState<boolean>(false);
 
     React.useEffect(() => {
         const headers = getDefaultHeaders('GET');
@@ -123,6 +125,8 @@ export const EditEvent: React.FC<EditEventProps> = (props) => {
 
     function handleEventNameChanged(val: string) {
         setEventName(val);
+
+        validateForm();
     }
 
     function handleDurationHoursChanged(val: string) {
@@ -143,6 +147,8 @@ export const EditEvent: React.FC<EditEventProps> = (props) => {
             }
         }
         catch { }
+
+        validateForm();
     }
 
     function handleDurationMinutesChanged(val: string) {
@@ -163,34 +169,66 @@ export const EditEvent: React.FC<EditEventProps> = (props) => {
             }
         }
         catch { }
+
+        validateForm();
     }
 
     function handleDescriptionChanged(val: string) {
         setDescription(val);
+
+        validateForm();
     }
 
     function handleStreetAddressChanged(val: string) {
         setStreetAddress(val);
+
+        validateForm();
     }
 
     function handleCityChanged(val: string) {
         setCity(val);
+
+        validateForm();
     }
 
     function selectCountry(val: string) {
         setCountry(val);
+
+        validateForm();
     }
 
     function selectRegion(val: string) {
         setRegion(val);
+
+        validateForm();
     }
 
     function handlePostalCodeChanged(val: string) {
         setPostalCode(val);
+
+        validateForm();
     }
 
     function handleMaxNumberOfParticipantsChanged(val: string) {
-        setMaxNumberOfParticipants(parseInt(val));
+
+        try {
+            if (val) {
+                var intVal = parseInt(val);
+
+                if (intVal < 0) {
+                    setMaxNumberOfParticipantsErrors("Max number of participants must be greater than or equal to zero.");
+                }
+                else {
+                    setMaxNumberOfParticipantsErrors("")
+                    setMaxNumberOfParticipants(parseInt(val));
+                }
+            }
+        }
+        catch {
+            setMaxNumberOfParticipantsErrors("Invalid value specified for Max Number of Participants.");
+        }
+
+        validateForm();
     }
 
     function handleLatitudeChanged(val: string) {
@@ -210,7 +248,11 @@ export const EditEvent: React.FC<EditEventProps> = (props) => {
                 setLatitudeErrors("Latitude must be => -90 and <= 90");
             }
         }
-        catch { }
+        catch {
+            setLatitudeErrors("Invalid value specified for Latitude.");
+        }
+
+        validateForm();
     }
 
     function handleLongitudeChanged(val: string) {
@@ -230,7 +272,11 @@ export const EditEvent: React.FC<EditEventProps> = (props) => {
                 setLongitudeErrors("Longitude must be >= -180 and <= 180");
             }
         }
-        catch { }
+        catch {
+            setLongitudeErrors("Invalid value specified for Longitude.")
+        }
+
+        validateForm();
     }
 
     function renderDescriptionToolTip(props: any) {
@@ -320,6 +366,8 @@ export const EditEvent: React.FC<EditEventProps> = (props) => {
                     })
             }
             )
+
+        validateForm();
     }
 
     function handleEventDateChange(passedDate: Date) {
@@ -331,6 +379,8 @@ export const EditEvent: React.FC<EditEventProps> = (props) => {
         }
 
         setEventDate(passedDate);
+
+        validateForm();
     }
 
     function handleIsEventPublicChanged(value: boolean) {
@@ -342,22 +392,35 @@ export const EditEvent: React.FC<EditEventProps> = (props) => {
         else {
             setEventDateErrors("");
         }
+
+        validateForm();
     }
 
     // This will handle Cancel button click event.
     function handleCancel(event: any) {
         event.preventDefault();
-
         props.onEditCancel();
     }
+
+    function validateForm() {
+        if (eventName === "" || eventDateErrors !== "" || description === "" || durationHoursErrors !== "" || durationMinutesErrors !== "" || latitudeErrors !== "" || longitudeErrors !== "" || city === "" ) {
+            setIsSaveEnabled(false);
+        }
+        else {
+            setIsSaveEnabled(true);
+        }
+    }
+
 
     // This will handle the submit form event.  
     function handleSave(event: any) {
         event.preventDefault();
 
-        if (eventDateErrors !== "") {
+        if (!isSaveEnabled) {
             return;
         }
+
+        setIsSaveEnabled(false);
 
         var eventData = new EventData();
         var method = "POST";
@@ -420,17 +483,17 @@ export const EditEvent: React.FC<EditEventProps> = (props) => {
                     </Form.Row>
                     <Form.Row>
                         <Col>
-                            <Form.Group>
+                            <Form.Group className="required">
                                 <OverlayTrigger placement="top" overlay={renderEventNameToolTip}>
-                                    <Form.Label htmlFor="Name">Name:</Form.Label>
+                                    <Form.Label className="control-label" htmlFor="Name">Name:</Form.Label>
                                 </OverlayTrigger>
                                 <Form.Control type="text" name="name" defaultValue={eventName} onChange={(val) => handleEventNameChanged(val.target.value)} maxLength={parseInt('64')} required />
                             </Form.Group>
                         </Col>
                         <Col>
-                            <Form.Group>
+                            <Form.Group className="required">
                                 <OverlayTrigger placement="top" overlay={renderEventTypeToolTip}>
-                                    <Form.Label htmlFor="EventType">Event Type:</Form.Label>
+                                    <Form.Label className="control-label" htmlFor="EventType">Event Type:</Form.Label>
                                 </OverlayTrigger>
                                 <div>
                                     <select data-val="true" name="eventTypeId" defaultValue={eventTypeId} onChange={(val) => selectEventType(val.target.value)} required>
@@ -460,9 +523,9 @@ export const EditEvent: React.FC<EditEventProps> = (props) => {
                     </Form.Row>
                     <Form.Row>
                         <Col>
-                            <Form.Group>
+                            <Form.Group className="required">
                                 <OverlayTrigger placement="top" overlay={renderEventDateToolTip}>
-                                    <Form.Label htmlFor="EventDate">EventDate:</Form.Label>
+                                    <Form.Label className="control-label" htmlFor="EventDate">EventDate:</Form.Label>
                                 </OverlayTrigger>
                                 <div>
                                     <DateTimePicker name="eventDate" onChange={handleEventDateChange} value={eventDate} />
@@ -471,9 +534,9 @@ export const EditEvent: React.FC<EditEventProps> = (props) => {
                             </Form.Group>
                         </Col>
                         <Col>
-                            <Form.Group>
+                            <Form.Group className="required">
                                 <OverlayTrigger placement="top" overlay={renderDurationHoursToolTip}>
-                                    <Form.Label htmlFor="DurationHours">Duration in Hours:</Form.Label>
+                                    <Form.Label className="control-label" htmlFor="DurationHours">Duration in Hours:</Form.Label>
                                 </OverlayTrigger>
                                 <div>
                                     <Form.Control type="text" size="sm" name="durationHours" defaultValue={durationHours} onChange={(val) => handleDurationHoursChanged(val.target.value)} />
@@ -495,9 +558,9 @@ export const EditEvent: React.FC<EditEventProps> = (props) => {
                     </Form.Row>
                     <Form.Row>
                         <Col>
-                            <Form.Group>
+                            <Form.Group className="required">
                                 <OverlayTrigger placement="top" overlay={renderDescriptionToolTip}>
-                                    <Form.Label htmlFor="Description">Description:</Form.Label>
+                                    <Form.Label className="control-label" htmlFor="Description">Description:</Form.Label>
                                 </OverlayTrigger>
                                 <Form.Control as="textarea" name="description" defaultValue={description} onChange={(val) => handleDescriptionChanged(val.target.value)} maxLength={parseInt('2048')} rows={5} cols={5} required />
                             </Form.Group>
@@ -513,11 +576,11 @@ export const EditEvent: React.FC<EditEventProps> = (props) => {
                             </Form.Group>
                         </Col>
                         <Col>
-                            <Form.Group>
+                            <Form.Group className="required">
                                 <OverlayTrigger placement="top" overlay={renderCityToolTip}>
                                     <Form.Label htmlFor="City">City:</Form.Label>
                                 </OverlayTrigger >
-                                <Form.Control type="text" name="city" value={city} onChange={(val) => handleCityChanged(val.target.value)} maxLength={parseInt('256')} required />
+                                <Form.Control className="control-label" type="text" name="city" value={city} onChange={(val) => handleCityChanged(val.target.value)} maxLength={parseInt('256')} required />
                             </Form.Group>
                         </Col>
                         <Col>
@@ -531,9 +594,9 @@ export const EditEvent: React.FC<EditEventProps> = (props) => {
                     </Form.Row>
                     <Form.Row>
                         <Col>
-                            <Form.Group>
+                            <Form.Group className="required">
                                 <OverlayTrigger placement="top" overlay={renderCountryToolTip}>
-                                    <Form.Label htmlFor="Country">Country:</Form.Label>
+                                    <Form.Label className="control-label" htmlFor="Country">Country:</Form.Label>
                                 </OverlayTrigger >
                                 <div>
                                     <CountryDropdown name="country" value={country ?? ""} onChange={(val) => selectCountry(val)} />
@@ -541,9 +604,9 @@ export const EditEvent: React.FC<EditEventProps> = (props) => {
                             </Form.Group>
                         </Col>
                         <Col>
-                            <Form.Group>
+                            <Form.Group className="required">
                                 <OverlayTrigger placement="top" overlay={renderRegionToolTip}>
-                                    <Form.Label htmlFor="Region">Region:</Form.Label>
+                                    <Form.Label className="control-label" htmlFor="Region">Region:</Form.Label>
                                 </OverlayTrigger >
                                 <div>
                                     <RegionDropdown
@@ -579,13 +642,13 @@ export const EditEvent: React.FC<EditEventProps> = (props) => {
                                     <Form.Label htmlFor="MaxNumberOfParticipants">Max Number Of Participants:</Form.Label>
                                 </OverlayTrigger >
                                 <Form.Control type="text" name="maxNumberOfParticipants" defaultValue={maxNumberOfParticipants} onChange={(val) => handleMaxNumberOfParticipantsChanged(val.target.value)} />
-
+                                <span style={{ color: "red" }}>{maxNumberOfParticipantsErrors}</span>
                             </Form.Group>
                         </Col>
                     </Form.Row>
                     <Form.Row>
                         <Form.Group>
-                            <Button type="submit" className="btn btn-default">Save</Button>
+                            <Button disabled={!isSaveEnabled} type="submit" className="btn btn-default">Save</Button>
                             <Button className="action" onClick={(e: any) => handleCancel(e)}>Cancel</Button>
                         </Form.Group>
                     </Form.Row>
