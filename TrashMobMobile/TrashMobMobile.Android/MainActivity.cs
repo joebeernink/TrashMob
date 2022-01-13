@@ -14,6 +14,8 @@ namespace TrashMobMobile.Droid
     using Microsoft.Extensions.DependencyInjection;
     using Android.Gms.Common;
     using Android.Util;
+    using WindowsAzure.Messaging.NotificationHubs;
+
     using System;
 
     [Activity(Label = "TrashMobMobile", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize )]
@@ -51,6 +53,12 @@ namespace TrashMobMobile.Droid
             }
 
             CreateNotificationChannel();
+
+            // Listen for push notifications
+            NotificationHub.SetListener(new AzureListener());
+
+            // Start the SDK
+            NotificationHub.Start(this.Application, AppConstants.NotificationHubName, AppConstants.ListenConnectionString);
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
