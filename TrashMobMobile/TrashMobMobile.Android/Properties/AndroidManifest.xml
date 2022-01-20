@@ -4,6 +4,12 @@
 	
 	<!-- Google Maps for Android v2 requires OpenGL ES v2 -->
 	<uses-feature android:glEsVersion="0x00020000" android:required="true" />
+
+	<!-- Needed for Notifications -->
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+	<uses-permission android:name="android.permission.WAKE_LOCK" />
+	<uses-permission android:name="android.permission.GET_ACCOUNTS"/>
 	
 	<application android:label="TrashMobMobile.Android" android:theme="@style/MainTheme" android:icon="@drawable/TrashMobEco_CircleLogo">
 		<meta-data android:name="com.google.android.geo.API_KEY" android:value="@string.GoogleApiKey" />
@@ -13,6 +19,7 @@
 		<uses-library android:name="org.apache.http.legacy" android:required="false" />
 
 		<!-- Needed for Notifications -->
+		<receiver android:name="com.google.firebase.iid.FirebaseInstanceIdInternalReceiver" android:exported="false" />
 		<receiver android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver" android:exported="true" android:permission="com.google.android.c2dm.permission.SEND">
 			<intent-filter>
 				<action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -26,12 +33,6 @@
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
-	<!-- Needed for Notifications -->
-	<uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-	<uses-permission android:name="android.permission.WAKE_LOCK" />
-	<uses-permission android:name="android.permission.GET_ACCOUNTS"/>
 	
 	<!-- Permission to receive remote notifications from Google Play Services -->
 	<!-- Notice here that we have the package name of our application as a prefix on the permissions. -->

@@ -9,12 +9,12 @@
     {
         public void OnPushNotificationReceived(Context context, INotificationMessage message)
         {
-            /*Context currContext = Application.Context;*/
-            var intent = new Intent(context, typeof(MainActivity));
+            Context currContext = Application.Context;
+            var intent = new Intent(currContext, typeof(MainActivity));
             intent.AddFlags(ActivityFlags.ClearTop);
-            var pendingIntent = PendingIntent.GetActivity(Android.App.Application.Context, 0, intent, PendingIntentFlags.OneShot);
+            var pendingIntent = PendingIntent.GetActivity(currContext, 0, intent, PendingIntentFlags.OneShot);
 
-            var notificationBuilder = new NotificationCompat.Builder(context, AppConstants.NotificationChannelName);
+            var notificationBuilder = new NotificationCompat.Builder(currContext, AppConstants.NotificationChannelName);
 
             notificationBuilder.SetContentTitle(message.Title)
                         .SetSmallIcon(Resource.Drawable.ic_launcher)
@@ -23,7 +23,7 @@
                         .SetShowWhen(false)
                         .SetContentIntent(pendingIntent);
 
-            var notificationManager = NotificationManager.FromContext(context);
+            var notificationManager = NotificationManager.FromContext(currContext);
 
             notificationManager.Notify(0, notificationBuilder.Build());
         }
