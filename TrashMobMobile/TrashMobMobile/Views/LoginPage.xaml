@@ -14,6 +14,8 @@
             <StackLayout Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
                 <Image Source="TME_BusinessCard_front.png" />
                 <Button x:Name="btnSignInSignOut" Text="Sign in" Command="{Binding LoginCommand}" VerticalOptions="End" HorizontalOptions="FillAndExpand"/>
+                <Button x:Name="RegisterButton" Text="Register" Clicked="RegisterButtonClicked" />
+                <Button x:Name="DeregisterButton" Text="Deregister" Clicked="DeregisterButtonClicked" />
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

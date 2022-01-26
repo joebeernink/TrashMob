@@ -8,6 +8,7 @@ namespace TrashMobMobile.Droid
     using Plugin.CurrentActivity;
     using Xamarin.Forms;
     using TrashMobMobile.Features.LogOn;
+    using TrashMobMobile.Services;
     using Microsoft.Identity.Client;
     using Android.Content;
     using Android;
@@ -22,6 +23,8 @@ namespace TrashMobMobile.Droid
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         const int RequestLocationId = 0;
+        IPushDemoNotificationActionService _notificationActionService;
+        IDeviceInstallationService _deviceInstallationService;
 
         readonly string[] LocationPermissions =
         {
@@ -59,6 +62,10 @@ namespace TrashMobMobile.Droid
 
             // Start the SDK
             NotificationHub.Start(this.Application, AppConstants.NotificationHubName, AppConstants.ListenConnectionString);
+
+            ServiceContainer.Register<IDeviceInstallationService>(() => new DeviceInstallationService());
+            ServiceContainer.Register<IPushDemoNotificationActionService>(() => new PushDemoNotificationActionService());
+            ServiceContainer.Register<INotificationRegistrationService>(() => new NotificationRegistrationService(AppConstants.ApiEndpoint, AppConstants.ApiKey));
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)

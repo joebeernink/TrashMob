@@ -3,7 +3,8 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.1</TargetFramework>
 		<ProduceReferenceAssembly>true</ProduceReferenceAssembly>
-	</PropertyGroup>
+	  <UserSecretsId>987bdbf6-3ef0-46ca-8d37-9ad1e0349e34</UserSecretsId>
+  </PropertyGroup>
 
 	<ItemGroup>
 		<None Remove="Resources\TME_BusinessCard_front.png" />

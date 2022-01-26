@@ -6,6 +6,7 @@
     using TrashMobMobile.Features.LogOn;
     using TrashMobMobile.Services;
     using TrashMobMobile.Views;
+    using Xamarin.Essentials;
     using Xamarin.Forms;
 
     public class LoginViewModel : BaseViewModel
@@ -34,13 +35,13 @@
             {
                 var userContext = await B2CAuthenticationService.Instance.SignInAsync(userManager);
 
-                await Xamarin.Essentials.SecureStorage.SetAsync("isLogged", "1");
+                await SecureStorage.SetAsync("isLogged", "1");
 
                 await CheckTermsOfService();
             }
             catch (Exception ex)
             {
-                await Xamarin.Essentials.SecureStorage.SetAsync("isLogged", "0");
+                await SecureStorage.SetAsync("isLogged", "0");
                 // Checking the exception message 
                 // should ONLY be done for B2C
                 // reset and not any other error.
@@ -78,7 +79,7 @@
             {
                 var userContext = await B2CAuthenticationService.Instance.ResetPasswordAsync(userManager);
 
-                await Xamarin.Essentials.SecureStorage.SetAsync("isLogged", "1");
+                await SecureStorage.SetAsync("isLogged", "1");
                 await CheckTermsOfService();
             }
             catch (Exception ex)

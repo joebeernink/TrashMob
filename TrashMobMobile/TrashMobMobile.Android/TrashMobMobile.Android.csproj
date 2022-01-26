@@ -1,5 +1,6 @@
-﻿
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup>  <UserSecretsId>01ead6de-8bfc-49cd-82e1-f6242152d68e</UserSecretsId>
+﻿<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <UserSecretsId>01ead6de-8bfc-49cd-82e1-f6242152d68e</UserSecretsId>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -102,10 +103,12 @@
   <ItemGroup>
     <Compile Include="AndroidParentWindowLocatorService.cs" />
     <Compile Include="AzureListener.cs" />
+    <Compile Include="DeviceInstallationService.cs" />
     <Compile Include="EventMapRenderer.cs" />
     <Compile Include="FirebaseService.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="MsalActivity.cs" />
+    <Compile Include="PushNotificationFirebaseMessagingService.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
