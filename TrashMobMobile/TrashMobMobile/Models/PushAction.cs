@@ -1,6 +1,6 @@
 ﻿namespace TrashMobMobile.Models
 {
-    public enum PushTrashMobAction
+    public enum PushAction
     {
         ActionA,
         ActionB

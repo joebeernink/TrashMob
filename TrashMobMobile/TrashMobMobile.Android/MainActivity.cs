@@ -23,7 +23,7 @@ namespace TrashMobMobile.Droid
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         const int RequestLocationId = 0;
-        IPushDemoNotificationActionService _notificationActionService;
+        IPushNotificationActionService _notificationActionService;
         IDeviceInstallationService _deviceInstallationService;
 
         readonly string[] LocationPermissions =
@@ -64,7 +64,7 @@ namespace TrashMobMobile.Droid
             NotificationHub.Start(this.Application, AppConstants.NotificationHubName, AppConstants.ListenConnectionString);
 
             ServiceContainer.Register<IDeviceInstallationService>(() => new DeviceInstallationService());
-            ServiceContainer.Register<IPushDemoNotificationActionService>(() => new PushDemoNotificationActionService());
+            ServiceContainer.Register<IPushNotificationActionService>(() => new PushNotificationActionService());
             ServiceContainer.Register<INotificationRegistrationService>(() => new NotificationRegistrationService(AppConstants.ApiEndpoint, AppConstants.ApiKey));
         }
 

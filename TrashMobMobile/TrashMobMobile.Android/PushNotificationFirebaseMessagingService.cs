@@ -9,14 +9,14 @@ namespace TrashMobMobile.Droid.Services
     [IntentFilter(new[] { "com.google.firebase.MESSAGING_EVENT" })]
     public class PushNotificationFirebaseMessagingService : FirebaseMessagingService
     {
-        IPushDemoNotificationActionService _notificationActionService;
+        IPushNotificationActionService _notificationActionService;
         INotificationRegistrationService _notificationRegistrationService;
         IDeviceInstallationService _deviceInstallationService;
 
-        IPushDemoNotificationActionService NotificationActionService
+        IPushNotificationActionService NotificationActionService
             => _notificationActionService ??
                 (_notificationActionService =
-                ServiceContainer.Resolve<IPushDemoNotificationActionService>());
+                ServiceContainer.Resolve<IPushNotificationActionService>());
 
         INotificationRegistrationService NotificationRegistrationService
             => _notificationRegistrationService ??

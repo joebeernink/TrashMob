@@ -5,15 +5,15 @@ using TrashMobMobile.Models;
 
 namespace TrashMobMobile.Services
 {
-    public class PushDemoNotificationActionService : IPushDemoNotificationActionService
+    public class PushNotificationActionService : IPushNotificationActionService
     {
-        readonly Dictionary<string, PushTrashMobAction> _actionMappings = new Dictionary<string, PushTrashMobAction>
+        readonly Dictionary<string, PushAction> _actionMappings = new Dictionary<string, PushAction>
         {
-            { "action_a", PushTrashMobAction.ActionA },
-            { "action_b", PushTrashMobAction.ActionB }
+            { "action_a", PushAction.ActionA },
+            { "action_b", PushAction.ActionB }
         };
 
-        public event EventHandler<PushTrashMobAction> ActionTriggered = delegate { };
+        public event EventHandler<PushAction> ActionTriggered = delegate { };
 
         public void TriggerAction(string action)
         {
