@@ -15,10 +15,8 @@
         public static string NotificationChannelName { get; set; } = "XamarinNotifyChannel";
 
         public static string NotificationHubName { get; set; } = "nh-tm-dev-westus2";
-        
-/*        public static string ListenConnectionString { get; set; } = "<add before starting - do not check in>";
-*/        public static string ListenConnectionString { get; set; } = "Endpoint=sb://nhns-tm-dev-westus2.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=C/h41yLczrlOxg2L7R1570CmPHPvi360FT1y5zI3GmQ=";
 
+        public static string ListenConnectionString { get; set; } = "<add before starting - do not check in>";
 
         public static string DebugTag { get; set; } = "XamarinNotify";
         
