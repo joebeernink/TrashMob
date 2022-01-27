@@ -3,8 +3,8 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using TrashMobMobile.Models;
 using Xamarin.Essentials;
+using TrashMobMobile.Models;
 
 namespace TrashMobMobile.Services
 {
@@ -53,7 +53,7 @@ namespace TrashMobMobile.Services
 
         public async Task RegisterDeviceAsync(params string[] tags)
         {
-            var deviceInstallation = DeviceInstallationService?.GetDeviceInstallation(tags);
+            var deviceInstallation = await DeviceInstallationService?.GetDeviceInstallation(tags);
 
             await SendAsync<DeviceInstallation>(HttpMethod.Put, RequestUrl, deviceInstallation)
                 .ConfigureAwait(false);

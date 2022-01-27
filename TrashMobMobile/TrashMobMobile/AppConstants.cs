@@ -10,13 +10,15 @@
         public static DateTimeOffset TermsOfServiceDate = new DateTimeOffset(2021, 5, 14, 0, 0, 0, TimeSpan.Zero);
         public static string ApiEndpoint = "https://as-tm-dev-westus2.azurewebsites.net/api/";
 
-        public static string ApiKey = "PLACEHOLDER_API_KEY";
+        // Do not check in secret
+        public static string ApiKey = "<API_KEY>";
 
         public static string NotificationChannelName { get; set; } = "XamarinNotifyChannel";
 
         public static string NotificationHubName { get; set; } = "nh-tm-dev-westus2";
 
-        public static string ListenConnectionString { get; set; } = "<add before starting - do not check in>";
+        // Do not check in secret
+        public static string ListenConnectionString { get; set; } = "<CONNECTION_STRING>";
 
         public static string DebugTag { get; set; } = "XamarinNotify";
         

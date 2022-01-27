@@ -1,4 +1,5 @@
-﻿using TrashMobMobile.Models;
+﻿using System.Threading.Tasks;
+using TrashMobMobile.Models;
 
 namespace TrashMobMobile.Services
 {
@@ -7,6 +8,6 @@ namespace TrashMobMobile.Services
         string Token { get; set; }
         bool NotificationsSupported { get; }
         string GetDeviceId();
-        DeviceInstallation GetDeviceInstallation(params string[] tags);
+        Task<DeviceInstallation> GetDeviceInstallation(params string[] tags);
     }
 }

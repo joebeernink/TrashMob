@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Android.App;
 using Android.Gms.Common;
+using static Android.Provider.Settings;
+using Firebase.Messaging;
+
 using TrashMobMobile.Models;
 using TrashMobMobile.Services;
-using static Android.Provider.Settings;
 
 namespace TrashMobMobile.Droid
 {
@@ -18,13 +21,21 @@ namespace TrashMobMobile.Droid
         public string GetDeviceId()
             => Secure.GetString(Application.Context.ContentResolver, Secure.AndroidId);
 
-        public DeviceInstallation GetDeviceInstallation(params string[] tags)
+        public async Task<DeviceInstallation> GetDeviceInstallation(params string[] tags)
         {
             if (!NotificationsSupported)
                 throw new Exception(GetPlayServicesError());
 
             if (string.IsNullOrWhiteSpace(Token))
-                throw new Exception("Unable to resolve token for FCM");
+            {
+                Console.WriteLine("Generating new token for FCM");
+                await Task.Run(() =>
+                {
+                    var token = FirebaseMessaging.Instance.GetToken();
+                    // update saved token, send it to the backend, etc.
+                    Token = token.ToString();
+                });
+            }
 
             var installation = new DeviceInstallation
             {
