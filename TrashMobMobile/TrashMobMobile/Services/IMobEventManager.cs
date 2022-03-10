@@ -9,6 +9,8 @@
     {
         Task<IEnumerable<MobEvent>> GetActiveEventsAsync();
 
+        Task<IEnumerable<MobEvent>> GetUserEventsAsync(Guid userId, bool showFutureEventsOnly);
+
         Task<MobEvent> GetEventAsync(Guid eventId);
 
         Task<MobEvent> UpdateEventAsync(MobEvent mobEvent);
@@ -22,5 +24,11 @@
         Task RemoveEventAttendeeAsync(EventAttendee eventAttendee);
  
         Task<bool> IsUserAttendingAsync(Guid eventId, Guid userId);
+
+        Task<EventSummary> GetEventSummaryAsync(Guid eventId);
+
+        Task<EventSummary> UpdateEventSummaryAsync(EventSummary eventSummary);
+
+        Task<EventSummary> AddEventSummaryAsync(EventSummary eventSummary);
     }
 }

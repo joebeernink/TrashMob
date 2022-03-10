@@ -11,7 +11,6 @@
 }
 
 #navbar a {
-    font-family: 'Poppins', sans-serif;
     font-weight: 500;
     font-size: 17px;
     line-height: 25px;
@@ -42,11 +41,10 @@
     border-top: 0.3em solid #96ba00 !important;
 }
 
-#loginBtn, #registerBtn, #logoutBtn {
+#loginBtn, #registerBtn, #userBtn {
     width: 115px;
     height: 45px;
     border-radius: 5px !important;
-    font-family: 'Poppins', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 15px;
@@ -57,7 +55,6 @@
     width: auto;
     height: 45px;
     border-radius: 5px !important;
-    font-family: 'Poppins', sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 13px;
@@ -66,7 +63,7 @@
     text-decoration: none;
 }
 
-#loginBtn, #welcomeBtn {
+#loginBtn, #welcomeBtn, #contactFormCancelBtn {
     background-color: unset !important;
     color: #96ba00 !important;
     border: 1px solid #96ba00 !important;
@@ -74,18 +71,18 @@
     margin-right: 9px;
 }
 
-#loginBtn:hover, #welcomeBtn:hover {
+#loginBtn:hover {
     background-color: #96ba00 !important;
     color: #fff !important;
     border: none;
     transition: all ease .5s;
 }
 
-#registerBtn, #logoutBtn {
+#registerBtn {
     transition: all ease .5s;
 }
 
-#registerBtn:hover, #logoutBtn:hover {
+#registerBtn:hover {
     background-color: unset !important;
     color: #96ba00 !important;
     border: 1px solid #96ba00 !important;
@@ -103,9 +100,24 @@
 }
 
 .dropdown-menu a {
-    font-family: 'Poppins', sans-serif;
     font-weight: 500;
     font-size: 17px;
     line-height: 25px;
     font-style: normal;
+}
+
+#userBtn {
+    background-color: unset !important;
+    font-size: 17px !important;
+    width: auto !important;
+    color: #6B6F74
+}
+
+#userBtn:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 1);
+}
+
+#userBtn + .dropdown-menu > .dropdown-item {
+    font-weight: 400;
+    color: #6B6F74;
 }
