@@ -14,6 +14,19 @@
     [IntentFilter(new[] { "com.google.firebase.MESSAGING_EVENT" })]
     public class FirebaseService : FirebaseMessagingService
     {
+        int messageId = 0;
+        const string channelId = "default";
+        const string channelName = "Default";
+        const string channelDescription = "The default channel for notifications.";
+
+        bool channelInitialized = false;
+        INotificationManager notificationManager;
+
+        public FirebaseService()
+        {
+            notificationManager = new AndroidNotificationManager();
+        }
+
         public override void OnNewToken(string token)
         {
             // NOTE: save token instance locally, or log if desired
@@ -57,30 +70,11 @@
             }
 
             // convert the incoming message to a local notification
-            SendLocalNotification(messageBody);
+
+            AndroidNotificationManager.Instance.SendNotification("Header",messageBody);
 
             // send the incoming message directly to the MainPage
-            SendMessageToMainPage(messageBody);
-        }
-
-        void SendLocalNotification(string body)
-        {
-            var intent = new Intent(this, typeof(MainActivity));
-            intent.AddFlags(ActivityFlags.ClearTop);
-            intent.PutExtra("message", body);
-
-            //Unique request code to avoid PendingIntent collision.
-            var requestCode = new Random().Next();
-            var pendingIntent = PendingIntent.GetActivity(this, requestCode, intent, PendingIntentFlags.OneShot);
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, AppConstants.NotificationChannelName)
-                .SetContentIntent(pendingIntent)
-                .SetContentTitle("XamarinNotify Message")
-                .SetContentText(body)
-                .SetSmallIcon(Resource.Drawable.ic_launcher)
-                .SetDefaults((int)NotificationDefaults.Sound | (int)NotificationDefaults.Vibrate);
-
-            var notificationManager = NotificationManager.FromContext(this);
-            notificationManager.Notify(0, builder.Build());
+            //SendMessageToMainPage(messageBody);
         }
 
         void SendMessageToMainPage(string body)

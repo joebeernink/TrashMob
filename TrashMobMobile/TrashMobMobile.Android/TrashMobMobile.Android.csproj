@@ -100,11 +100,13 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AndroidNotificationManager.cs" />
     <Compile Include="AndroidParentWindowLocatorService.cs" />
     <Compile Include="AzureListener.cs" />
     <Compile Include="DeviceInstallationService.cs" />
     <Compile Include="EventMapRenderer.cs" />
     <Compile Include="FirebaseService.cs" />
+    <Compile Include="INotificationManager.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="MsalActivity.cs" />
     <Compile Include="PushNotificationFirebaseMessagingService.cs" />
