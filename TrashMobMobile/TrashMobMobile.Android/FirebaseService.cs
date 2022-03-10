@@ -4,6 +4,7 @@
     using Android.Content;
     using Android.OS;
     using Android.Util;
+    using AndroidX.Core.App;
     using Firebase.Messaging;
     using System;
     using System.Linq;
@@ -71,17 +72,15 @@
             //Unique request code to avoid PendingIntent collision.
             var requestCode = new Random().Next();
             var pendingIntent = PendingIntent.GetActivity(this, requestCode, intent, PendingIntentFlags.OneShot);
-
-            var notificationBuilder = new Notification.Builder(this, AppConstants.NotificationChannelName)
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, AppConstants.NotificationChannelName)
+                .SetContentIntent(pendingIntent)
                 .SetContentTitle("XamarinNotify Message")
-                .SetSmallIcon(Resource.Drawable.ic_launcher)
                 .SetContentText(body)
-                .SetAutoCancel(true)
-                .SetShowWhen(false)
-                .SetContentIntent(pendingIntent);
+                .SetSmallIcon(Resource.Drawable.ic_launcher)
+                .SetDefaults((int)NotificationDefaults.Sound | (int)NotificationDefaults.Vibrate);
 
             var notificationManager = NotificationManager.FromContext(this);
-            notificationManager.Notify(0, notificationBuilder.Build());
+            notificationManager.Notify(0, builder.Build());
         }
 
         void SendMessageToMainPage(string body)
