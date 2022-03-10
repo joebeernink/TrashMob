@@ -3,7 +3,6 @@
 	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="30" />
 	<!-- Google Maps for Android v2 requires OpenGL ES v2 -->
 	<uses-feature android:glEsVersion="0x00020000" android:required="true" />
-<<<<<<< HEAD
 
 	<!-- Needed for Notifications -->
 	<uses-permission android:name="android.permission.INTERNET" />
@@ -11,8 +10,6 @@
 	<uses-permission android:name="android.permission.WAKE_LOCK" />
 	<uses-permission android:name="android.permission.GET_ACCOUNTS"/>
 	
-=======
->>>>>>> 0debdd9710afad13e21e0f7ca144122013540b64
 	<application android:label="TrashMobMobile.Android" android:theme="@style/MainTheme" android:icon="@drawable/TrashMobEco_CircleLogo">
 		<meta-data android:name="com.google.android.geo.API_KEY" android:value="GOOGLE_API_KEY" />
 		<meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
